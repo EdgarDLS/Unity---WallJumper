@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
             if (CheckPlatform())
             {
+                this.transform.parent = null;
                 myRigidbody.AddForce(jumpDirection * movementSpeed);
                 jumpAction = true;
             }
@@ -47,10 +48,10 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        sittingTerrain = collision.gameObject;      // Set the new terrain where the player is sitting on
-        jumpAction = false;                         // Let the player jump again
-        myRigidbody.velocity = Vector3.zero;        // Velocity = 0 so it stops on collision
+        sittingTerrain = collision.gameObject;          // Set the new terrain where the player is sitting on
+        jumpAction = false;                             // Let the player jump again
+        myRigidbody.velocity = Vector3.zero;            // Velocity = 0 so it stops on collision
 
-
+        this.transform.parent = collision.transform;
     }
 }
