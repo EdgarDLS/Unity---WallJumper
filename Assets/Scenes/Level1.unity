@@ -7819,7 +7819,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh14658
+  m_Name: pb_Mesh14126
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -10191,7 +10191,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh14748
+  m_Name: pb_Mesh14220
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -12704,7 +12704,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh14762
+  m_Name: pb_Mesh14234
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -13037,7 +13037,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh14580
+  m_Name: pb_Mesh14048
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -16296,7 +16296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EFFECT_TWEENING_ENABLED: 1
-  EFFECT_TWEENING_ROTATION: 0
+  EFFECT_TWEENING_ROTATION: 1
   EFFECT_TWEENING_SCALE: 0
   EFFECT_TWEENING_DELAY: 0.99
   EFFECT_TWEENING_DURATION: 4.02
