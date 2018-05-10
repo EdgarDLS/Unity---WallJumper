@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Space]
     public float movementSpeed = 15;
 
     private Camera mainCamera;
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour
 	void Start ()
     {
         mainCamera = Camera.main;
-	}
+    }
 	
 	void Update ()
     {
