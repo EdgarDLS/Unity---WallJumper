@@ -38,7 +38,7 @@ public class ThirdPersonCamera : MonoBehaviour
             transform.position = target.position - (this.transform.forward * distanceFromTarget);
         }
 
-
+        // ScrollWheel | Camera distance from the target
         if (Input.GetAxis("Mouse ScrollWheel") > .0f)       //UP
             distanceFromTarget -= 0.25f;
         else if (Input.GetAxis("Mouse ScrollWheel") < .0f)  //DOWN
