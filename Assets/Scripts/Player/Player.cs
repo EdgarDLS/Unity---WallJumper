@@ -82,6 +82,8 @@ public class Player : MonoBehaviour
 
     private void Restart()
     {
+        GameMaster._GM.GlitchEffect();
+
         if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
 
         isDead = false;

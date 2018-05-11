@@ -4,9 +4,27 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
+    public static GameMaster _GM;
+
     [SerializeField] private Transform[] _terrains;
 
-	void Update ()
+    Animator cameraAnimator;
+
+
+    private void Awake()
+    {
+        if (_GM != null && _GM != this)
+            Destroy(this.gameObject);
+        else
+            _GM = this;
+    }
+
+    private void Start()
+    {
+        cameraAnimator = Camera.main.GetComponent<Animator>();
+    }
+
+    void Update ()
     {
 		if (Input.GetKeyDown(KeyCode.RightControl))
         {
@@ -16,4 +34,9 @@ public class GameMaster : MonoBehaviour
             }
         }
 	}
+
+    public void GlitchEffect()
+    {
+        cameraAnimator.Play("Glitch");
+    }
 }
