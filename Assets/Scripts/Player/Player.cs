@@ -86,6 +86,7 @@ public class Player : MonoBehaviour
 
         if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
 
+        myRigidbody.velocity = Vector3.zero;
         isDead = false;
         jumpAction = false;
 
