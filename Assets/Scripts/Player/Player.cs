@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private GameObject sittingTerrain;
     private Rigidbody myRigidbody;
     private SphereCollider myCollider;
+    private AudioSource glitchSound;
     private Camera mainCamera;
     private bool jumpAction;
     private Vector3 jumpDirection;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     {
         myRigidbody = this.gameObject.GetComponent<Rigidbody>();
         myCollider = this.gameObject.GetComponent<SphereCollider>();
+        glitchSound = this.gameObject.GetComponent<AudioSource>();
         mainCamera = Camera.main;
     }
 	
@@ -83,6 +85,7 @@ public class Player : MonoBehaviour
     private void Restart()
     {
         GameMaster._GM.GlitchEffect();
+        glitchSound.Play();
 
         if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
 
@@ -90,7 +93,7 @@ public class Player : MonoBehaviour
         isDead = false;
         jumpAction = false;
 
-    
+        this.transform.position = checkpoint.transform.position;
     }
 
     // NOT BEING USED FOR THE MOMENT
