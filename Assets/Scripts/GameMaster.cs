@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+
 
 public class GameMaster : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameMaster : MonoBehaviour
     [SerializeField] private Transform[] _terrains;
 
     Animator cameraAnimator;
+    //PostProcessVolume postProcessing;
 
 
     private void Awake()

@@ -26,13 +26,13 @@ public class Turret : MonoBehaviour
         if (target != null)
         {
             // Check if the player is in sight
-            Vector3 direction = (target.position - launchPosition.position).normalized;
-            RaycastHit hit;
+            //Vector3 direction = (target.position - launchPosition.position).normalized;
+            //RaycastHit hit;
 
-            if (Physics.Raycast(launchPosition.position, direction, out hit, Mathf.Infinity))
-            {
-                if (hit.collider.gameObject.tag.Equals("Player"))
-                {
+            //if (Physics.Raycast(launchPosition.position, direction, out hit, Mathf.Infinity))
+            //{
+                //if (hit.collider.gameObject.tag.Equals("Player"))
+                //{
                     // Rotate to the players direction
                     turretBody.LookAt(target);
 
@@ -49,8 +49,8 @@ public class Turret : MonoBehaviour
 
                     fireTimer += Time.deltaTime;
 
-                }
-            }    
+                //}
+            //}    
         }
     }
 
