@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class TerrainEasing : MonoBehaviour
 {
+    public bool bluePlatform = false;           // To check if its a blue platform, which means is a platform with movement and cant move till the tweening finishes
+
+    [Space]
     [SerializeField] private Transform terrainMesh;
-    [SerializeField] private Transform initialPosition;
+    public Transform initialPosition;
 
 
     EasingFunction.Ease easeFunction;
@@ -48,6 +51,8 @@ public class TerrainEasing : MonoBehaviour
             //easingPosition = EasingFunction.EaseOutBounce(initialCoord, desiredCoord, t);
 
             // Rotation
+            easingVector[1].x = EasingFunction.EaseOutCubic(initialVector[1].x, desiredVector[1].x, t);
+            easingVector[1].y = EasingFunction.EaseOutCubic(initialVector[1].y, desiredVector[1].y, t);
             easingVector[1].z = EasingFunction.EaseOutCubic(initialVector[1].z, desiredVector[1].z, t);
 
             // Scale
@@ -62,15 +67,21 @@ public class TerrainEasing : MonoBehaviour
         else if (floatingDelay > 0)
         {
             floatingDelay -= Time.deltaTime;
+
+            if (bluePlatform)
+                terrainMesh.GetComponent<BluePlatform>().CanMove();
         }
         else
         {
-            floatingValue += Time.deltaTime;
+            if (!bluePlatform)
+            {
+                floatingValue += Time.deltaTime;
 
-            Vector3 newFloatingVector = terrainMesh.localPosition;
-            newFloatingVector.y = newFloatingVector.y + floatingAmplitude * Mathf.Sin(floatingValue);
+                Vector3 newFloatingVector = terrainMesh.localPosition;
+                newFloatingVector.y = newFloatingVector.y + floatingAmplitude * Mathf.Sin(floatingValue);
 
-            terrainMesh.localPosition = newFloatingVector;
+                terrainMesh.localPosition = newFloatingVector;
+            }  
         }
     }
 
@@ -104,7 +115,7 @@ public class TerrainEasing : MonoBehaviour
 
             if (Settings.settings.EFFECT_TWEENING_ROTATION)
             {
-                easingVector[1] = new Vector3(0, 0, Random.Range(45, -45));
+                easingVector[1] = new Vector3(Random.Range(-90, 90), Random.Range(-90, 90), Random.Range(45, -45));
                 initialVector[1] = easingVector[1];
                 desiredVector[1] = transform.rotation.eulerAngles;
             }

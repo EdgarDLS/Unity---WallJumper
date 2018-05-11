@@ -8,7 +8,7 @@ public class GameMaster : MonoBehaviour
 
 	void Update ()
     {
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.RightControl))
         {
             foreach (Transform t in _terrains)
             {
