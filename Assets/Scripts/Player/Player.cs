@@ -3,13 +3,15 @@
 public class Player : MonoBehaviour
 {
     [Space]
-    public float movementSpeed = 15;
+    public float movementSpeed = 2400  ;                // Jump force
+    public MeshCollider terrainCollider;                // Collider of the terrain the player is sitting on | Used to ignore the collision between this and the player at the jumping moment 
 
     [Space]
     [SerializeField] private Transform checkpoint;
 
     private GameObject sittingTerrain;
     private Rigidbody myRigidbody;
+    private SphereCollider myCollider;
     private Camera mainCamera;
     private bool jumpAction;
     private Vector3 jumpDirection;
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
 	void Start ()
     {
         myRigidbody = this.gameObject.GetComponent<Rigidbody>();
+        myCollider = this.gameObject.GetComponent<SphereCollider>();
         mainCamera = Camera.main;
     }
 	
@@ -36,6 +39,10 @@ public class Player : MonoBehaviour
 
                 if (CheckPlatform())
                 {
+                    /** Try in the future instead of ignoring collision, a set of raycast with the size of the sphere **/
+                    // To ignore the collision of the terrain the player is sitting on, to avoid different behaviors due to the collision at the moment of trying to jump.
+                    if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, true);
+
                     this.transform.parent = null;
                     myRigidbody.AddForce(jumpDirection * movementSpeed);
                     jumpAction = true;
@@ -43,6 +50,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        /** Got to be changed in the future **/
         // Little effect once the player dies
         else
         {
@@ -74,6 +82,8 @@ public class Player : MonoBehaviour
 
     private void Restart()
     {
+        if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
+
         isDead = false;
         jumpAction = false;
 
@@ -84,9 +94,12 @@ public class Player : MonoBehaviour
     {
         if (!collision.gameObject.tag.Equals("Lava"))
         {
+            if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
+
             sittingTerrain = collision.gameObject;          // Set the new terrain where the player is sitting on
             jumpAction = false;                             // Let the player jump again
             myRigidbody.velocity = Vector3.zero;            // Velocity = 0 so it stops on collision
+            terrainCollider = collision.gameObject.GetComponent<MeshCollider>();
 
             this.transform.parent = collision.transform;
         }

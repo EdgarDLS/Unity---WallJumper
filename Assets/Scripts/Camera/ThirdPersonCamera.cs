@@ -6,6 +6,7 @@ public class ThirdPersonCamera : MonoBehaviour
 {
     public float mouseSensitivity = 20;
     public float rotationSmoothTime = 0.12f;
+    public bool firstPersonView;
     [SerializeField] private Vector2 pitchMinMax = new Vector2(-40, 85);    // Not X and Y | Min and Max values
 
     [Space]
@@ -35,14 +36,17 @@ public class ThirdPersonCamera : MonoBehaviour
             //Vector3 targetRotation = new Vector3(pitch, yaw);
             transform.eulerAngles = currentRotation;
 
-            transform.position = target.position - (this.transform.forward * distanceFromTarget);
+            if (!firstPersonView) transform.position = target.position - (this.transform.forward * distanceFromTarget);
+            else transform.position = target.position - (this.transform.forward * 0.25f);
         }
 
         // ScrollWheel | Camera distance from the target
-        if (Input.GetAxis("Mouse ScrollWheel") > .0f)       //UP
+        if (Input.GetAxis("Mouse ScrollWheel") > .0f && distanceFromTarget > 2f)       //UP
             distanceFromTarget -= 0.25f;
-        else if (Input.GetAxis("Mouse ScrollWheel") < .0f)  //DOWN
+        else if (Input.GetAxis("Mouse ScrollWheel") < .0f && distanceFromTarget < 15f)  //DOWN
             distanceFromTarget += 0.25f;
+        else if (Input.GetMouseButtonDown(1))
+            firstPersonView = !firstPersonView;
 
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
