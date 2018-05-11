@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         isDead = false;
         jumpAction = false;
 
-        this.transform.position = checkpoint.transform.position;
+    
     }
 
     // NOT BEING USED FOR THE MOMENT
