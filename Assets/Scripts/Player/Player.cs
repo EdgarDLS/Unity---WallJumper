@@ -90,9 +90,16 @@ public class Player : MonoBehaviour
         this.transform.position = checkpoint.transform.position;
     }
 
+    // NOT BEING USED FOR THE MOMENT
+    public void Die()
+    {
+        myRigidbody.velocity = Vector3.zero;
+        isDead = true;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.tag.Equals("Lava"))
+        if (!collision.gameObject.tag.Equals("Lava") && !collision.gameObject.tag.Equals("Projectile"))
         {
             if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
 
@@ -106,7 +113,6 @@ public class Player : MonoBehaviour
 
         else
         {
-
             myRigidbody.velocity *= -1;
             currentDeadLerp = 0f;
             actualVelocity = myRigidbody.velocity;
