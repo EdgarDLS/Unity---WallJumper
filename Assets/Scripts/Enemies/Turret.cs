@@ -15,10 +15,15 @@ public class Turret : MonoBehaviour
 
     private Transform target;
 
+    [Space]
+    [SerializeField] private int layerMask = 1 << 9;
+
     private void Start()
     {
         turretBody = this.transform.Find("Body");
         launchPosition = turretBody.Find("Barrel").transform.Find("launchPosition");
+
+        layerMask = ~layerMask;
     }
 
     void Update()
@@ -26,13 +31,15 @@ public class Turret : MonoBehaviour
         if (target != null)
         {
             // Check if the player is in sight
-            //Vector3 direction = (target.position - launchPosition.position).normalized;
-            //RaycastHit hit;
+            Vector3 direction = (target.position - this.transform.position).normalized;
+            RaycastHit hit;
 
-            //if (Physics.Raycast(launchPosition.position, direction, out hit, Mathf.Infinity))
-            //{
-                //if (hit.collider.gameObject.tag.Equals("Player"))
-                //{
+            Debug.DrawRay(this.transform.position, direction * 100, Color.red);
+
+            if (Physics.Raycast(this.transform.position, direction, out hit, Mathf.Infinity, layerMask))
+            {
+                if (hit.collider.gameObject.tag.Equals("Player"))
+                {
                     // Rotate to the players direction
                     turretBody.LookAt(target);
 
@@ -49,8 +56,8 @@ public class Turret : MonoBehaviour
 
                     fireTimer += Time.deltaTime;
 
-                //}
-            //}    
+                }
+            }    
         }
     }
 

@@ -1,18 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster _GM;
+    public AudioSource flickeringSound;
+
+    [Space]
+    public int nextLevel = 0;
 
     [SerializeField] private Transform[] _terrains;
 
     Animator cameraAnimator;
-    //PostProcessVolume postProcessing;
-
+    AsyncOperation asyncLoad;
+    float animFlickeringLength = 4.5f;
 
     private void Awake()
     {
@@ -36,10 +39,31 @@ public class GameMaster : MonoBehaviour
                 t.GetComponent<TerrainEasing>().Begin();
             }
         }
-	}
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            FlickeringEffect();
+        }
+    }
+
+    IEnumerator LoadLevel()
+    {
+        yield return new WaitForSeconds(animFlickeringLength);
+        asyncLoad.allowSceneActivation = true;
+    }
 
     public void GlitchEffect()
     {
         cameraAnimator.Play("Glitch");
+    }
+
+    public void FlickeringEffect()
+    {
+        asyncLoad = SceneManager.LoadSceneAsync(nextLevel);
+        asyncLoad.allowSceneActivation = false;
+
+        flickeringSound.Play();
+        cameraAnimator.Play("Flickering");
+
+        StartCoroutine(LoadLevel());
     }
 }

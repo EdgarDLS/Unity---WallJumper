@@ -19,9 +19,11 @@ public class ThirdPersonCamera : MonoBehaviour
     [SerializeField] private float yaw;
     [SerializeField] private float pitch;
 
-	void Start ()
+
+    void Start ()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 	
 	void Update ()
@@ -49,12 +51,15 @@ public class ThirdPersonCamera : MonoBehaviour
             firstPersonView = !firstPersonView;
 
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.Escape))
         {
             if (Cursor.lockState != CursorLockMode.Locked)
                 Cursor.lockState = CursorLockMode.Locked;
             else
+            {
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }   
         }  
     }
 }

@@ -4,14 +4,17 @@ public class Player : MonoBehaviour
 {
     [Space]
     public float movementSpeed = 2400  ;                // Jump force
-    public MeshCollider terrainCollider;                // Collider of the terrain the player is sitting on | Used to ignore the collision between this and the player at the jumping moment 
+    public GameObject deathParticles;
+    [SerializeField] AudioSource daethSound;
 
     [Space]
     [SerializeField] private Transform checkpoint;
 
+    private MeshCollider terrainCollider;                // Collider of the terrain the player is sitting on | Used to ignore the collision between this and the player at the jumping moment 
     private GameObject sittingTerrain;
     private Rigidbody myRigidbody;
     private SphereCollider myCollider;
+    private MeshRenderer myMesh;
     private AudioSource glitchSound;
     private Camera mainCamera;
     private bool jumpAction;
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
     {
         myRigidbody = this.gameObject.GetComponent<Rigidbody>();
         myCollider = this.gameObject.GetComponent<SphereCollider>();
+        myMesh = this.gameObject.GetComponent<MeshRenderer>();
         glitchSound = this.gameObject.GetComponent<AudioSource>();
         mainCamera = Camera.main;
     }
@@ -87,6 +91,8 @@ public class Player : MonoBehaviour
         GameMaster._GM.GlitchEffect();
         glitchSound.Play();
 
+        myMesh.enabled = true;
+
         if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
 
         myRigidbody.velocity = Vector3.zero;
@@ -99,7 +105,14 @@ public class Player : MonoBehaviour
     // NOT BEING USED FOR THE MOMENT
     public void Die()
     {
-        myRigidbody.velocity = Vector3.zero;
+        //myRigidbody.velocity *= -1;
+        //currentDeadLerp = 0f;
+        //actualVelocity = myRigidbody.velocity;
+
+        myMesh.enabled = false;
+        Destroy(Instantiate(deathParticles, this.transform.position, Quaternion.FromToRotation(Vector3.forward, jumpDirection)) as GameObject, 2);
+        daethSound.Play();
+
         isDead = true;
     }
 
@@ -119,11 +132,7 @@ public class Player : MonoBehaviour
 
         else
         {
-            myRigidbody.velocity *= -1;
-            currentDeadLerp = 0f;
-            actualVelocity = myRigidbody.velocity;
-
-            isDead = true;
+            Die();
         } 
     }
 }
