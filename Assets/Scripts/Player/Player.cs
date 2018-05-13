@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     public float movementSpeed = 2400  ;                // Jump force
     public GameObject deathParticles;
     [SerializeField] AudioSource daethSound;
+    [SerializeField] AudioSource godModeSound;
 
     [Space]
     [SerializeField] private Transform checkpoint;
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
     private float deadLerp = 0.7f;
     private float currentDeadLerp;
     private Vector3 actualVelocity;
+
+    private bool godMode = false;
 
 	void Start ()
     {
@@ -54,6 +57,14 @@ public class Player : MonoBehaviour
                     jumpAction = true;
                 }
             }
+
+            else if (Input.GetKeyDown(KeyCode.G))
+            {
+                if (godMode) godMode = false;
+                else godMode = true;
+                godModeSound.Play();
+            }
+                
         }
 
         /** Got to be changed in the future **/
@@ -102,13 +113,13 @@ public class Player : MonoBehaviour
         this.transform.position = checkpoint.transform.position;
     }
 
-    // NOT BEING USED FOR THE MOMENT
     public void Die()
     {
         //myRigidbody.velocity *= -1;
         //currentDeadLerp = 0f;
         //actualVelocity = myRigidbody.velocity;
 
+        myRigidbody.velocity = Vector3.zero;
         myMesh.enabled = false;
         Destroy(Instantiate(deathParticles, this.transform.position, Quaternion.FromToRotation(Vector3.forward, jumpDirection)) as GameObject, 2);
         daethSound.Play();
@@ -116,18 +127,43 @@ public class Player : MonoBehaviour
         isDead = true;
     }
 
+    public void PrepareNextLevel()
+    {
+        myRigidbody.velocity = Vector3.zero;
+        myMesh.enabled = false;
+
+        isDead = true;
+    }
+
+    public void SetCheckpoint(Transform _checkpoint)
+    {
+        checkpoint = _checkpoint;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.tag.Equals("Lava") && !collision.gameObject.tag.Equals("Projectile"))
+        if (godMode)
         {
-            if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);
+            if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);       // Turn the avoiding false to collide with the same platform in the future.
 
             sittingTerrain = collision.gameObject;          // Set the new terrain where the player is sitting on
             jumpAction = false;                             // Let the player jump again
             myRigidbody.velocity = Vector3.zero;            // Velocity = 0 so it stops on collision
             terrainCollider = collision.gameObject.GetComponent<MeshCollider>();
 
-            this.transform.parent = collision.transform;
+            this.transform.parent = collision.transform;    // Parent so it moves with the platform
+        }
+
+        else if (!collision.gameObject.tag.Equals("Lava") && !collision.gameObject.tag.Equals("Projectile"))
+        {
+            if (terrainCollider != null) Physics.IgnoreCollision(myCollider, terrainCollider, false);       // Turn the avoiding false to collide with the same platform in the future.
+
+            sittingTerrain = collision.gameObject;          // Set the new terrain where the player is sitting on
+            jumpAction = false;                             // Let the player jump again
+            myRigidbody.velocity = Vector3.zero;            // Velocity = 0 so it stops on collision
+            terrainCollider = collision.gameObject.GetComponent<MeshCollider>();
+
+            this.transform.parent = collision.transform;    // Parent so it moves with the platform
         }
 
         else

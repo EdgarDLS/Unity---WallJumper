@@ -7,15 +7,17 @@ public class GameMaster : MonoBehaviour
 {
     public static GameMaster _GM;
     public AudioSource flickeringSound;
+    public GameObject optionsMenu;
 
     [Space]
     public int nextLevel = 0;
 
     [SerializeField] private Transform[] _terrains;
 
+    public Player player;
     Animator cameraAnimator;
     AsyncOperation asyncLoad;
-    float animFlickeringLength = 4.5f;
+    float animFlickeringLength = 4.3f;
 
     private void Awake()
     {
@@ -28,20 +30,37 @@ public class GameMaster : MonoBehaviour
     private void Start()
     {
         cameraAnimator = Camera.main.GetComponent<Animator>();
+        player = GameObject.Find("Player").GetComponent<Player>();
+
+        optionsMenu.SetActive(false);
     }
 
     void Update ()
     {
-		if (Input.GetKeyDown(KeyCode.RightControl))
-        {
-            foreach (Transform t in _terrains)
-            {
-                t.GetComponent<TerrainEasing>().Begin();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.RightControl))
+  //      {
+  //          foreach (Transform t in _terrains)
+  //          {
+  //              t.GetComponent<TerrainEasing>().Begin();
+  //          }
+  //      }
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             FlickeringEffect();
+        }
+
+        // Numpad level laod
+        else if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SceneManager.LoadScene(2, LoadSceneMode.Single);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            optionsMenu.SetActive(!optionsMenu.activeSelf);
         }
     }
 
@@ -65,5 +84,27 @@ public class GameMaster : MonoBehaviour
         cameraAnimator.Play("Flickering");
 
         StartCoroutine(LoadLevel());
+    }
+
+    public void PrepareNextLevel()
+    {
+        FlickeringEffect();
+        player.PrepareNextLevel();
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+
+    // Trigger used to check if the player is out of bounds and kill him
+    // ONLY FOR THE PROTOTYPE
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("Player"))
+        {
+            player.Die();
+        }
     }
 }

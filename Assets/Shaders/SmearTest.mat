@@ -73,5 +73,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Position: {r: -14.32, g: 1.0036263, b: -0.5999985, a: 0}
-    - _PrevPosition: {r: -14.32, g: 1.0036263, b: -0.5999985, a: 0}
+    - _Position: {r: -14.32, g: 0.98435783, b: -0.5999985, a: 0}
+    - _PrevPosition: {r: -14.32, g: 0.98435783, b: -0.5999985, a: 0}
