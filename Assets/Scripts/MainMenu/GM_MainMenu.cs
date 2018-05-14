@@ -8,6 +8,7 @@ public class GM_MainMenu : MonoBehaviour
     private void Start()
     {
         optionsMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 

@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
 
     // Dead variables
     private bool isDead = false;
-    private float deadLerp = 0.7f;
-    private float currentDeadLerp;
-    private Vector3 actualVelocity;
+    //private float deadLerp = 0.7f;
+    //private float currentDeadLerp;
+    //private Vector3 actualVelocity;
 
     private bool godMode = false;
 
@@ -69,17 +69,17 @@ public class Player : MonoBehaviour
 
         /** Got to be changed in the future **/
         // Little effect once the player dies
-        else
-        {
-            currentDeadLerp += Time.deltaTime;
+        //else
+        //{
+        //    currentDeadLerp += Time.deltaTime;
 
-            if (currentDeadLerp > deadLerp)
-                currentDeadLerp = deadLerp;
+        //    if (currentDeadLerp > deadLerp)
+        //        currentDeadLerp = deadLerp;
 
-            float perc = currentDeadLerp / deadLerp;
+        //    float perc = currentDeadLerp / deadLerp;
 
-            myRigidbody.velocity = Vector3.Lerp(actualVelocity, Vector3.zero, perc);
-        }
+        //    myRigidbody.velocity = Vector3.Lerp(actualVelocity, Vector3.zero, perc);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Space))
             Restart();

@@ -8,7 +8,6 @@ public class BluePlatform : MonoBehaviour
 
     [Space]
     public float lerpTime = 1f;
-    [SerializeField] private EasingFunction.Ease EASE_FUNCTION = EasingFunction.Ease.EaseOutBounce;
 
     private bool movementReady = false;     // To check if the tweening finished.
     private int fromWaypoint = 0;            // Current waypoint the platform is trying to reach
