@@ -48,6 +48,11 @@ public class GameMaster : MonoBehaviour
         {
             FlickeringEffect();
         }
+        else if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (optionsMenu.activeSelf)
+                optionsMenu.SetActive(false);
+        }
 
         // Numpad level laod
         else if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -60,7 +65,7 @@ public class GameMaster : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            optionsMenu.SetActive(!optionsMenu.activeSelf);
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
     }
 
@@ -97,6 +102,11 @@ public class GameMaster : MonoBehaviour
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
+    public void PlayerDead()
+    {
+        player.Die();
+        optionsMenu.SetActive(true);
+    }
 
     // Trigger used to check if the player is out of bounds and kill him
     // ONLY FOR THE PROTOTYPE
@@ -104,7 +114,7 @@ public class GameMaster : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            player.Die();
+            PlayerDead();
         }
     }
 }

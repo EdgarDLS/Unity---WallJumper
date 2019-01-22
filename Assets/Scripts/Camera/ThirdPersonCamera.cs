@@ -49,9 +49,11 @@ public class ThirdPersonCamera : MonoBehaviour
             distanceFromTarget += 0.25f;
         else if (Input.GetMouseButtonDown(1))
             firstPersonView = !firstPersonView;
+            
 
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.Escape))
+        //if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             if (Cursor.lockState != CursorLockMode.Locked)
             {

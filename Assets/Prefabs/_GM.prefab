@@ -164,9 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flickeringSound: {fileID: 82888355343474428}
-  pressSpaceBar: {fileID: 0}
   optionsMenu: {fileID: 0}
-  nextLevel: 1
+  nextLevel: 2
   _terrains:
   - {fileID: 0}
   player: {fileID: 0}

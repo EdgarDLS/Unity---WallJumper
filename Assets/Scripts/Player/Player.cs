@@ -169,6 +169,7 @@ public class Player : MonoBehaviour
         else
         {
             Die();
+            GameMaster._GM.PlayerDead();
         } 
     }
 }
